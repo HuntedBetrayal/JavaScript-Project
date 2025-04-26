@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Naitik Doshi's Project </title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f0f0f0; }
+    section { margin-bottom: 40px; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+    button { padding: 10px 20px; margin: 10px 0; cursor: pointer; }
+    .dark-mode { background-color: #333; color: white; }
+  </style>
+</head>
+<body>
+  <h1> Multiple project ideas in one</h1>
+
+  <!-- 1. Click Counter -->
+  <section>
+    <h2>Click Counter</h2>
+    <button onclick="countClicks()">Click Me!</button>
+    <p>Count: <span id="clickCount">0</span></p>
+  </section>
+
+  <!-- 2. Color Changer -->
+  <section>
+    <h2>Color Changer</h2>
+    <button onclick="changeColor()">Change Background Color</button>
+  </section>
+
+  <!-- 3. Simple Form Validation -->
+  <section>
+    <h2>Form Validation</h2>
+    <form onsubmit="return validateForm()">
+      Name: <input type="text" id="name"><br><br>
+      Email: <input type="email" id="email"><br><br>
+      Phone No. :<input type="number" id="phoneno."><br><br>
+      gender:
+      <input type="radio" name="sex">M
+      <input type="radio" name="sex">F
+      <br><br>
+      <button type="submit">Submit</button>
+    </form>
+    <p id="formError" style="color:red;"></p>
+  </section>
+
+  <!-- 4. Basic Calculator -->
+  <section>
+    <h2>Calculator</h2>
+    <input type="number" id="num1"> <input type="number" id="num2">
+    <br>
+    <button onclick="calculate('add')">Add</button>
+    <button onclick="calculate('subtract')">Subtract</button>
+    <button onclick="calculate('multiply')">Multiply</button>
+    <button onclick="calculate('divide')">Divide</button>
+    <p>Result: <span id="calcResult"></span></p>
+  </section>
+
+  <!-- 5. Digital Clock -->
+  <section>
+    <h2>Digital Clock</h2>
+    <p id="clock"></p>
+  </section>
+
+
+  <!-- 6. Random Quote Generator -->
+  <section>
+    <h2>Random Quote Generator</h2>
+    <button onclick="showQuote()">Get Quote</button>
+    <p id="quote"></p>
+  </section>
+
+
+  <!-- 7. BMI Calculator -->
+  <section>
+    <h2>BMI Calculator</h2>
+    Weight (kg): <input type="number" id="weight"><br>
+    Height (m): <input type="number" id="height"><br>
+    <button onclick="calculateBMI()">Calculate BMI</button>
+    <p id="bmiResult"></p>
+  </section>
+
+  <!-- 8. Word Counter -->
+  <section>
+    <h2>Word Counter</h2>
+    <textarea id="textInput" rows="5" cols="30" oninput="countWords()"></textarea>
+    <p>Word Count: <span id="wordCount">0</span></p>
+  </section>
+
+  <script>
+    let count = 0;
+    function countClicks() {
+      document.getElementById('clickCount').textContent = ++count;
+    }
+
+    function changeColor() {
+      const colors = ['#ff9999', '#99ff99', '#9999ff', '#ffff99', '#ffcc99'];
+      document.body.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    }
+
+    function validateForm() {
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phoneno').value.trim();
+      const genderSelected = document.querySelector('input[name="sex"]:checked');
+      if (!name) {
+        document.getElementById('formError').textContent = 'Please enter your name.';
+        return false;
+      }
+      if (!email.includes('@') || !email.includes('.')) {
+        document.getElementById('formError').textContent = 'Please enter a valid email address.';
+        return false;
+      }
+      if (!/^\d{10}$/.test(phone)) {
+        document.getElementById('formError').textContent = 'Please enter a valid 10-digit phone number.';
+        return false;
+      }
+      if (!genderSelected) {
+        document.getElementById('formError').textContent = 'Please select your gender.';
+        return false;
+      }
+      document.getElementById('formError').textContent = '';
+      alert('Form submitted successfully!');
+      return true;
+    }
+
+    function calculate(op) {
+      const a = parseFloat(document.getElementById('num1').value);
+      const b = parseFloat(document.getElementById('num2').value);
+      let result;
+      if (isNaN(a) || isNaN(b)) {
+        result = 'Invalid input';
+      } else {
+        switch(op) {
+          case 'add': result = a + b; break;
+          case 'subtract': result = a - b; break;
+          case 'multiply': result = a * b; break;
+          case 'divide': result = b !== 0 ? a / b : 'Cannot divide by zero'; break;
+        }
+      }
+      document.getElementById('calcResult').textContent = result;
+    }
+
+    function updateClock() {
+      const now = new Date();
+      document.getElementById('clock').textContent = now.toLocaleTimeString();
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+
+    const quotes = [
+      "Dream big. Start small. Act now.",
+      'Stay hungry, stay foolish.',
+      "Progress, not perfection.",
+      "Do it with passion or not at all.",
+      "Success is a journey, not a destination.",
+      "Be a voice, not an echo.",
+      "Create the life you can't wait to wake up to.",
+      "Less talk, more action.",
+      "Hustle in silence. Let success make the noise.",
+      "You are your only limit.",
+      "Success loves preparation.",
+      "Dream it. Do it.",
+      "Grind now. Shine later.",
+      "Stay focused. Stay winning.",
+      "Consistency creates success.",
+      "Turn dreams into plans.",
+      "Winners never quit.",
+      "Rise, grind, repeat.",
+      "Chase goals, not people.",
+      "Make it happen."
+    ];
+    function showQuote() {
+      const i = Math.floor(Math.random() * quotes.length);
+      document.getElementById('quote').textContent = quotes[i];
+    }
+
+    function calculateBMI() {
+  const weight = parseFloat(document.getElementById('weight').value);
+  const height = parseFloat(document.getElementById('height').value);
+
+
+  if (!isNaN(weight) && !isNaN(height) && weight > 0 && height > 0) {
+
+    const bmi = weight / (height * height);
+
+
+    let category = '';
+    if (bmi < 18.5) {
+      category = 'Underweight';
+    } else if (bmi < 25) {
+      category = 'Normal';
+    } else if (bmi < 30) {
+      category = 'Overweight';
+    } else {
+      category = 'Obese';
+    }
+
+
+    document.getElementById('bmiResult').textContent = `BMI: ${bmi.toFixed(2)} (${category})`;
+  } else {
+
+    document.getElementById('bmiResult').textContent = 'Please enter valid numbers for weight and height.';
+  }
+}
+
+
+    function countWords() {
+      const text = document.getElementById('textInput').value.trim();
+      const wordCount = text ? text.split(/\s+/).length : 0;
+      document.getElementById('wordCount').textContent = wordCount;
+    }
+  </script>
+</body>
+</html>
